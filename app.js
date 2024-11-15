@@ -3,12 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
- 
+
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString);
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var conferenceRouter = require('./routes/conference');
 var gridRouter = require('./routes/grid');
-var pickRouter = require('./routes/pick');
+var pickRouter = require('./routes/pick'); 
+var resourceRouter = require('./routes/resource');
  
 var app = express();
  
@@ -27,7 +33,11 @@ app.use('/users', usersRouter);
 app.use('/conference', conferenceRouter);
 app.use('/grid', gridRouter);
 app.use('/pick', pickRouter);
- 
+app.use('/resource', resourceRouter);
+
+var Conference = require("./models/conference");
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -45,4 +55,35 @@ app.use(function(err, req, res, next) {
 });
  
 module.exports = app;
- 
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")}); 
+
+// We can seed the collection if needed on server start
+async function recreateDB(){
+ // Delete everything
+ await Conference.deleteMany();
+ let instance1 = new Conference({conference_name: 'Tech Innovators', location: 'New York', year: 2021 });
+ let instance2 = new Conference({conference_name: 'Global Health Summit', location: 'Geneva', year: 2019});
+ let instance3 = new Conference({conference_name: 'AI & Machine Learning', location: 'San Francisco', year: 2023});
+ instance1.save().then(doc=>{
+ console.log("First object saved")}
+ ).catch(err=>{
+ console.error(err)
+ });
+ instance2.save().then(doc=>{
+  console.log("Second object saved")}
+  ).catch(err=>{
+  console.error(err)
+  });
+instance3.save().then(doc=>{
+  console.log("Third object saved")}
+  ).catch(err=>{
+  console.error(err)
+  });
+}
+let reseed = true;
+if (reseed) {recreateDB();}
