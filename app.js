@@ -55,6 +55,7 @@ app.use(function(err, req, res, next) {
 });
  
 module.exports = app;
+<<<<<<< HEAD
 //Get the default connection
 var db = mongoose.connection;
 //Bind connection to error event
@@ -87,3 +88,6 @@ instance3.save().then(doc=>{
 }
 let reseed = true;
 if (reseed) {recreateDB();}
+=======
+ 
+>>>>>>> e2e4209d4ebe1e82f6c390df501f82824f10e78b
