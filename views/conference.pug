@@ -1,30 +1,53 @@
+//- extends layout
+
+//- block content
+//-   h1= title
+//-   h1 Siddharth Sai Myneni
+//-   // Unbuffered code block to define results array
+//-   -
+//-     let results = [
+//-       { conference_name: 'Tech Innovators', location: 'New York', year: 2021 },
+//-       { conference_name: 'Global Health Summit', location: 'Geneva', year: 2019 },
+//-       { conference_name: 'AI & Machine Learning', location: 'San Francisco', year: 2023 }
+//-     ];
+
+//-   // Container for Bootstrap grid
+//-   .container-fluid
+//-     .row
+//-       // Loop through each item in the results array with index
+//-       each conference, index in results
+//-         .col-sm-2
+//-           h3 #{conference.conference_name}
+//-           p Location: #{conference.location}
+//-           p Year: #{conference.year}
+
+//-            // Button that calls buy() function with the index of the conference
+//-           button(type="button", class="btn btn-outline-success", onclick=`buy(${index +1})`) Purchase
+ 
+//-   // Script to define the buy() function
+//-   script.
+//-     function buy(index) {
+//-       alert(`You purchased item ${index}`);
+//-     }
+
 extends layout
 
 block content
-  h1= title
-  h1 Siddharth Sai Myneni
-  // Unbuffered code block to define results array
-  -
-    let results = [
-      { conference_name: 'Tech Innovators', location: 'New York', year: 2021 },
-      { conference_name: 'Global Health Summit', location: 'Geneva', year: 2019 },
-      { conference_name: 'AI & Machine Learning', location: 'San Francisco', year: 2023 }
-    ];
+  h1 Search Results - Conference
 
-  // Container for Bootstrap grid
   .container-fluid
     .row
-      // Loop through each item in the results array with index
-      each conference, index in results
-        .col-sm-2
-          h3 #{conference.conference_name}
-          p Location: #{conference.location}
-          p Year: #{conference.year}
+      each item in results
+        div.col-sm-3
+          h3 #{item.conference_name}
+          p Location: #{item.location}
+          p Year: #{item.year}
+          a(href=`/conference/${item._id}`) Inspect
+          a(href=`/conference/${item._id}/update`) Update
+          a(href=`/conference/${item._id}/delete`) Delete
+  
+  a(href='/conference/create') Add New conference
 
-           // Button that calls buy() function with the index of the conference
-          button(type="button", class="btn btn-outline-success", onclick=`buy(${index +1})`) Purchase
- 
-  // Script to define the buy() function
   script.
     function buy(index) {
       alert(`You purchased item ${index}`);
