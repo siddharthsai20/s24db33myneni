@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    h1 Conference Detail
+
+    if (toShow == null)
+        h2 No instance found
+    else
+        - let conferenceid = toShow._id
+        - let conference_name = toShow.conference_name
+        - let location = toShow.location
+        - let year = toShow.year
+
+        div(class="mb-3")
+            div.row.mb-2
+                div(class='conferenceAttr mr-3 font-weight-bold') Conference ID:
+                div #{conferenceid}
+            div.row.mb-2
+                div(class='conferenceAttr mr-3 font-weight-bold') Conference_Name:
+                div #{conference_name}
+            div.row.mb-2
+                div(class='conferenceAttr mr-3 font-weight-bold') Location:
+                div #{location}
+            div.row.mb-2
+                div(class='conferenceAttr mr-3 font-weight-bold') Year:
+                div #{year}
+
+        button(class="btn btn-secondary mt-3" onclick="goBack()") Go Back
+
+    script.
+        function goBack() {
+            window.location.href = "/conference";
+        }

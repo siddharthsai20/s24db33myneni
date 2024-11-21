@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1= title
+  form(id='ConferenceForm', action="/resource/conference", method="POST")
+    div.form-group
+      label.conferenceAttr(for='conference_name') Conference Name
+      input#conference_name(type='text', name='conference_name')
+    div.form-group
+      label.conferenceAttr(for='location') Location
+      input#location(type='text', name='location')
+    div.form-group
+      label.conferenceAttr(for='year') Year
+      input#year(type='number', name='year')
+    input(type="submit")
+  script.
+    document.forms['ConferenceForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target))
+      }).then((resp) => {
+        return resp.json();
+      }).then((body) => {
+        alert("Save succeeded");
+      }).catch((error) => {
+        alert("Save failed " + error);
+      });
+    });

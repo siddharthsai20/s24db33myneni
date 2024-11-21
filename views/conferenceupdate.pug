@@ -1,0 +1,53 @@
+extends layout
+
+block content
+    h1 Conference Update
+
+    if (toShow == null)
+        h2 No instance found to update
+    else
+        - let conferenceid = toShow._id
+        - let conference_name = toShow.conference_name
+        - let location = toShow.location
+        - let year = toShow.year
+
+        div.row.mb-3
+            div.mr-1.font-weight-bold ID is:
+            div #{conferenceid}
+
+        - let actionid = "/resource/conference/" + conferenceid
+        form(id='conferenceForm', action=actionid, method="PUT")
+            div.form-group
+                label.conferenceAttr(for='conference_name') Conference_Name:
+                input#conference_name(type='text', name='conference_name', value=conference_name, class='form-control')
+            div.form-group
+                label.conferenceAttr(for='location')  Location:
+                input#location(type='text', name='location', value=location, class='form-control')
+            div.form-group
+                label.conferenceAttr(for='year') Year:
+                input#year(type='number', name='year', value=year, class='form-control')
+                input(type="submit", class="btn btn-primary mt-2")
+
+        button(class="btn btn-secondary mt-2 ml-2" onclick="goBack()") Cancel
+
+    script.
+        function goBack() {
+            window.location.href = "/conference";
+        }
+
+    script.
+        document.forms['conferenceForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            fetch(event.target.action, {
+                method: 'PUT',
+                body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+            })
+            .then((resp) => resp.json())
+            .then((body) => {
+                alert("Update succeeded");
+                window.location.href = "/conference";
+            })
+            .catch((error) => {
+                alert("Update failed " + error);
+            });
+        });

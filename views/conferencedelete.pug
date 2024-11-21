@@ -1,0 +1,53 @@
+extends layout
+block content
+    h1 Conference Delete
+    if (toShow == null)
+        h2 No instance to delete
+    else
+        - let conferenceid = toShow._id
+        - let conference_name = toShow.conference_name
+        - let location = toShow.location
+        - let year = toShow.year
+        - let actionid = "/resource/conference/" + conferenceid
+        
+        script let actionid = "#{actionid}"
+        div
+            div.row
+                div(class='conferenceAttr mr-3') Conference ID is:
+                div #{conferenceid}
+            div.row
+                div(class='conferenceAttr mr-3') Conference Name is:
+                div #{conference_name}
+            div.row
+                div(class='conferenceAttr mr-3')  Location is:
+                div #{location}
+            div.row
+                div(class='conferenceAttr mr-3') Year is:
+                div #{year}
+                
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+
+    script.
+        function cancel() {
+        // Go back to the home page for the conference collection
+        window.location.href='/conference'
+        }
+
+    script.
+        function deleteOnid() {
+            console.log("starting delete")
+            // delete first
+            fetch(actionid, {
+                method: 'DELETE' // Don't need a body for the delete
+            }).then((resp) => {
+                return resp.json(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+                alert("Delete succeded")
+                window.location.href='/conference'
+            // TODO handle body
+            }).catch((error) => {
+            // TODO handle error
+                alert("Delete failed " + error )
+            });
+        }
