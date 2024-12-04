@@ -63,7 +63,7 @@ router.get('/detail', conference_controller.conference_view_one_Page);
 
 router.get('/create', conference_controller.conference_create_Page);
 
-router.get('/update', secured,conference_controller.conference_update_Page);
+router.get('/update', conference_controller.conference_update_Page);
 
 router.get('/delete', conference_controller.conference_delete_Page);
 
