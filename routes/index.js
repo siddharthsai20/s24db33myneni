@@ -1,13 +1,14 @@
 var express = require('express');
 var passport = require('passport');
+
 var router = express.Router();
 var Account = require('../models/account');
 
 router.get('/', function (req, res) {
-  res.render('index', { title: 'Inventions App', user: req.user });
+  res.render('index', { title: 'conference App', user: req.user });
 });
 router.get('/register', function (req, res) {
-  res.render('register', { title: 'Inventions App Registration' });
+  res.render('register', { title: 'conference App Registration' });
 });
 router.post('/register', function (req, res) {
   Account.findOne({ username: req.body.username })
@@ -47,7 +48,7 @@ router.post('/register', function (req, res) {
 });
 
 router.get('/login', function (req, res) {
-  res.render('login', { title: 'Inventions App Login', user: req.user });
+  res.render('login', { title: 'conference App Login', user: req.user });
 });
 router.post('/login', passport.authenticate('local'), function (req, res) {
   res.redirect('/');
