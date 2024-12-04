@@ -36,6 +36,14 @@
 var express = require('express');
 var router = express.Router();
 var conference_controller = require('../controllers/conference');
+// A little function to check if we have an authorized user and continue on or
+// redirect to login.
+const secured = (req, res, next) => {
+if (req.user){
+return next();
+}
+res.redirect("/login");
+}
 
 router.get('/', conference_controller.conference_list);
 
@@ -55,7 +63,7 @@ router.get('/detail', conference_controller.conference_view_one_Page);
 
 router.get('/create', conference_controller.conference_create_Page);
 
-router.get('/update', conference_controller.conference_update_Page);
+router.get('/update', secured,conference_controller.conference_update_Page);
 
 router.get('/delete', conference_controller.conference_delete_Page);
 
