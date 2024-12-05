@@ -66,6 +66,8 @@ block content
         - let destination2 = `dispatch(\"/conference/delete?id=${item._id}\")`
         div(class="row-sm-2", class="m-1") Item #{item.conference_name}(#{item.location}) is #{item.year}
         button.btn( class="btn-primary m-1", onclick= destination) Update
+        button.btn( class="btn-primary m-1", onclick= destination) Detail
+        button.btn( class="btn-primary m-1", onclick= destination) Delete 
         br
         br
        
